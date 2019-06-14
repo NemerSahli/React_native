@@ -15,11 +15,15 @@ const styles = StyleSheet.create({
 export default class LotsOfStyles extends Component {
   render() {
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <Text style={styles.red}>just red</Text>
         <Text style={styles.bigBlue}>just bigBlue</Text>
         <Text style={[styles.bigBlue, styles.red]}>bigBlue, then red</Text>
         <Text style={[styles.red, styles.bigBlue]}>red, then bigBlue</Text>
+
+        <View style={{ flex: 1, backgroundColor: 'powderblue' }} />
+        <View style={{ flex: 2, backgroundColor: 'skyblue' }} />
+        <View style={{ flex: 3, backgroundColor: 'steelblue' }} />
       </View>
     );
   }
