@@ -1,19 +1,34 @@
 import React, { Component } from 'react';
-import { ScrollView, Image, Text } from 'react-native';
+import { View, Image, Text, ImageBackground } from 'react-native';
 
 export default class WeatherApi extends Component {
   render() {
     return (
-      <ScrollView>
-        <Text style={{ fontSize: 50 }}>Weather API</Text>
-        <Image
+      <View>
+        <ImageBackground
           source={{
-            uri: 'https://facebook.github.io/react-native/img/favicon.png',
-            width: 64,
-            height: 64
+            uri:
+              'https://images.pexels.com/photos/1743398/pexels-photo-1743398.jpeg?cs=srgb&dl=4k-wallpaper-calm-environment-1743398.jpg&fm=jpg'
           }}
-        />
-      </ScrollView>
+          style={{ width: '100%', height: '100%' }}
+        >
+          <Text style={{ fontSize: 50, textAlign: 'center', color: 'white' }}>
+            Weather API
+          </Text>
+          <Text
+            style={{
+              backgroundColor: 'transparent',
+              textAlign: 'center',
+              fontSize: 30,
+              color: 'white',
+              padding: 40,
+              flex: 1
+            }}
+          >
+            some text will be here!
+          </Text>
+        </ImageBackground>
+      </View>
     );
   }
 }
