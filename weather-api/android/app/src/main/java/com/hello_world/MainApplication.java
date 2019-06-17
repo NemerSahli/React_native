@@ -1,4 +1,4 @@
-package com.hello_world;
+package com.weather_api;
 
 import android.app.Application;
 
