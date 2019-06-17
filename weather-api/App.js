@@ -13,9 +13,20 @@ export default class WeatherApi extends Component {
     super(props);
     this.state = { city: '' };
   }
-  getWeather = ()=>{
-    alert(this.state.city);
-  }
+  getWeather = () => {
+    fetch(
+      `http://api.openweathermap.org/data/2.5/weather?q=${
+        this.state.city
+      }&APPID=e5002d2707d4e4c39ab8079b3982d719&units=metric`
+    )
+      .then(response => response.json())
+      .then(responseJson => {
+        alert(JSON.stringify(responseJson.movies));
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
   render() {
     return (
       <View>
@@ -57,11 +68,9 @@ export default class WeatherApi extends Component {
             placeholder="City Name..."
             onChangeText={text => this.setState({ city: text })}
           />
-          <Button  title="Go" onPress={this.getWeather}
-  color="#841584"/>
+          <Button title="Go" onPress={this.getWeather} color="#841584" />
         </ImageBackground>
       </View>
     );
   }
 }
-
