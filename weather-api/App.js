@@ -17,16 +17,20 @@ export default class WeatherApi extends Component {
     this.state = {
       city: '',
       weather: null,
-      location: null
+      latitude: 0,
+      longitude: 0,
+      error: null
     };
   }
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       position => {
-        const location = JSON.stringify(position);
-
-        this.setState({ location: location });
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null
+        });
       },
       error => Alert.alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -113,7 +117,13 @@ export default class WeatherApi extends Component {
                 Go
               </Text>
             </TouchableHighlight>
-            <Text style={{ fontSize: 20, color: 'white' }}>Location: {this.state.location}</Text>
+
+            <Text style={{ fontSize: 20, color: 'white' }}>
+              Latitude: {this.state.latitude}
+            </Text>
+            <Text style={{ fontSize: 20, color: 'white' }}>
+              Longitude: {this.state.longitude}
+            </Text>
             {this.state.weather ? (
               <View
                 style={{
@@ -131,7 +141,9 @@ export default class WeatherApi extends Component {
                 <Text style={{ fontSize: 20, color: 'white' }}>
                   Humidit: {this.state.weather.main.humidity} %
                 </Text>
-                <Text style={{ fontSize: 20, color: 'white',paddingBottom:100 }}>
+                <Text
+                  style={{ fontSize: 20, color: 'white', paddingBottom: 100 }}
+                >
                   description: {this.state.weather.weather[0].description}
                 </Text>
               </View>
