@@ -14,8 +14,25 @@ import {
 export default class WeatherApi extends Component {
   constructor(props) {
     super(props);
-    this.state = { city: '', weather: null };
+    this.state = {
+      city: '',
+      weather: null,
+      location: null
+    };
   }
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const location = JSON.stringify(position);
+
+        this.setState({ location: location });
+      },
+      error => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
+  }
+
   getWeather = () => {
     if (this.state.city === '') return;
     fetch(
@@ -38,6 +55,7 @@ export default class WeatherApi extends Component {
         console.error(error);
       });
   };
+
   render() {
     return (
       <View>
@@ -95,7 +113,7 @@ export default class WeatherApi extends Component {
                 Go
               </Text>
             </TouchableHighlight>
-
+            <Text style={{ fontSize: 20, color: 'white' }}>Location: {this.state.location}</Text>
             {this.state.weather ? (
               <View
                 style={{
@@ -113,7 +131,7 @@ export default class WeatherApi extends Component {
                 <Text style={{ fontSize: 20, color: 'white' }}>
                   Humidit: {this.state.weather.main.humidity} %
                 </Text>
-                <Text style={{ fontSize: 20, color: 'white' }}>
+                <Text style={{ fontSize: 20, color: 'white',paddingBottom:100 }}>
                   description: {this.state.weather.weather[0].description}
                 </Text>
               </View>
