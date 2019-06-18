@@ -117,12 +117,17 @@ export default class WeatherApi extends Component {
                 Go
               </Text>
             </TouchableHighlight>
-
             <Text style={{ fontSize: 20, color: 'white' }}>
-              Latitude: {this.state.latitude}
+              Your Geolocation
+            </Text>
+            <Text style={{ fontSize: 20, color: 'white' }}>
+              Your Geolocation Latitude: {this.state.latitude}
             </Text>
             <Text style={{ fontSize: 20, color: 'white' }}>
               Longitude: {this.state.longitude}
+            </Text>
+            <Text style={{ fontSize: 20, color: 'white' }}>
+              ---------------------
             </Text>
             {this.state.weather ? (
               <View
@@ -139,7 +144,7 @@ export default class WeatherApi extends Component {
                   speed: {this.state.weather.wind.speed} km/h
                 </Text>
                 <Text style={{ fontSize: 20, color: 'white' }}>
-                  Humidit: {this.state.weather.main.humidity} %
+                  Humidity: {this.state.weather.main.humidity} %
                 </Text>
                 <Text
                   style={{ fontSize: 20, color: 'white', paddingBottom: 100 }}
