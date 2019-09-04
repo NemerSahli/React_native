@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import {
   View,
-  Image,
+  Alert,
   Text,
   ImageBackground,
   TextInput,
   Button,
   Keyboard,
   TouchableHighlight,
-  ScrollView
+  ScrollView,
+  PermissionsAndroid
 } from 'react-native';
 
 export default class WeatherApi extends Component {
@@ -23,18 +24,35 @@ export default class WeatherApi extends Component {
     };
   }
 
-  componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          error: null
-        });
-      },
-      error => Alert.alert(error.message),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    );
+  async componentDidMount() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'App location Permission',
+          message: 'App needs access to your location ',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK'
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            this.setState({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+              error: null
+            });
+          },
+          error => Alert.alert(error.message)
+        );
+      } else {
+        console.log('Location permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
   }
 
   getWeather = () => {
@@ -121,7 +139,7 @@ export default class WeatherApi extends Component {
               Your Geolocation
             </Text>
             <Text style={{ fontSize: 20, color: 'white' }}>
-              Your Geolocation Latitude: {this.state.latitude}
+              Latitude: {this.state.latitude}
             </Text>
             <Text style={{ fontSize: 20, color: 'white' }}>
               Longitude: {this.state.longitude}
